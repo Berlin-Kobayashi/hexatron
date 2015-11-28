@@ -80,12 +80,18 @@ export class Grid {
 
         player.forward();
 
+        if (this.turnCounter > this.trailLength) {
+            let tailPos = player.trail.pop();
+            this.grid[tailPos.x][tailPos.y] = cellState.EMPTY;
+        }
+
         //if out of bounce in front cell status = bodyKey
         let inFrontCellState = (player.xPos >= this.gridSizeX || player.yPos >= this.gridSizeY || player.xPos < 0 || player.yPos < 0) ? bodyKey : this.grid[player.xPos][player.yPos];
 
         if (inFrontCellState !== cellState.EMPTY) {
             return 1;
         }
+
 
         this.grid[initialXPos][initialYPos] = bodyKey;
 
@@ -122,10 +128,13 @@ export class Player {
         this.xPos = position[0];
         this.yPos = position[1];
         this.direction = direction;
+        this.trail = new Array();
 
     }
 
     forward() {
+
+        this.trail.push({x: this.xPos, y: this.yPos});
 
         switch (this.direction) {
             case playerDirection.UP:

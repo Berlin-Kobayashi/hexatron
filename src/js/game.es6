@@ -4,7 +4,7 @@ export class Game extends Phaser.State {
   create() {
     this.stage.backgroundColor = 0x000000;
     this.gridSize = {x: 80, y: 40};
-    this.data = new Grid.Grid(this.gridSize.x, this.gridSize.y);
+    this.data = new Grid.Grid(this.gridSize.x, this.gridSize.y, 10);
     this.scale = 0.5;
     this.time.desiredFps = 10;
     this.drawBackground();
