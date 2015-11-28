@@ -2,14 +2,16 @@ export class Grid {
 
 // Player 1 starts at the bottom Player 2 at the top
 
-    constructor(gridSize) {
+    constructor(gridSizeX, gridSizeY) {
 
         //this.state = gameState.PAUSED;
 
         this.turnCounter = 0;
 
-        this.gridSize = gridSize;
-        this.trailLength = parseInt(gridSize / 2);
+        this.gridSizeX = gridSizeX;
+        this.gridSizeY = gridSizeY;
+
+        this.trailLength = parseInt(gridSizeY / 2);
 
         this.player1 = new Player("Player 1", {}, playerDirection.UP);
         this.player2 = new Player("Player 2", {}, playerDirection.DOWN);
@@ -22,27 +24,29 @@ export class Grid {
 
     initializeGrid() {
 
-        let gridSize = this.gridSize;
-        let grid = new Array(gridSize);
+        let gridSizeX = this.gridSizeX;
+        let gridSizeY = this.gridSizeY;
 
-        // create an cellState.EMPTY, gridSize x gridSize array
-        for (let i = 0; i < gridSize; i++) {
-            grid[i] = new Array(gridSize);
-            for (let j = 0; j < gridSize; j++) {
+        let grid = new Array(gridSizeX);
+
+        // create an cellState.EMPTY, gridSizeX x gridSizeY array
+        for (let i = 0; i < gridSizeX; i++) {
+            grid[i] = new Array(gridSizeY);
+            for (let j = 0; j < gridSizeY; j++) {
                 grid[i][j] = cellState.EMPTY;
             }
         }
 
-        let middleColumnPos = parseInt((gridSize - 1) / 2);
+        let middleColumnPos = parseInt((gridSizeX - 1) / 2);
 
         grid[middleColumnPos][0] = cellState.HEAD1;
-        grid[middleColumnPos][gridSize - 1] = cellState.HEAD2;
+        grid[middleColumnPos][gridSizeY - 1] = cellState.HEAD2;
 
         this.player1.xPos = middleColumnPos;
         this.player1.yPos = 0;
 
         this.player2.xPos = middleColumnPos;
-        this.player2.yPos = gridSize - 1;
+        this.player2.yPos = gridSizeY - 1;
 
         this.grid = grid;
 
@@ -80,7 +84,7 @@ export class Grid {
         player.forward();
 
         //if out of bounce infront cell status = bodyKey
-        let infrontCellState = (player.xPos >= this.gridSize || player.yPos < this.gridSize || player.xPos < 0 || player.yPos < 0) ? bodyKey : this.grid[player.xPos][player.yPos];
+        let infrontCellState = (player.xPos >= this.gridSizeX || player.yPos >= this.gridSizeY || player.xPos < 0 || player.yPos < 0) ? bodyKey : this.grid[player.xPos][player.yPos];
 
         if (infrontCellState !== cellState.EMPTY) {
             return 1;
@@ -217,7 +221,7 @@ export var winner = {
     RUNNING: 0,
     PLAYER1: 1,
     PLAYER2: 2,
-    DRAW: 3,
+    DRAW: 3
 
 };
 
@@ -238,6 +242,6 @@ export var playerDirection = {
     RIGHTDOWN: 2,
     DOWN: 3,
     LEFTDOWN: 4,
-    LEFTUP: 5,
+    LEFTUP: 5
 
 };
