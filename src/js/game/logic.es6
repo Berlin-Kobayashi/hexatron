@@ -78,7 +78,7 @@ export class Grid {
 
         player.forward();
 
-        if (this.turnCounter > this.trailLength) {
+        if (this.turnCounter >= this.trailLength) {
             let tailPos = player.trail.shift();
             this.grid[tailPos.x][tailPos.y] = cellState.EMPTY;
         }

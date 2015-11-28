@@ -51,6 +51,5 @@ export class Boot extends Phaser.State {
       $("#maxLengthLabel").remove();
       this.state.start("Game"); 
     }
-  }
-  
+  } 
 }
