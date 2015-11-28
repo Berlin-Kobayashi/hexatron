@@ -39,7 +39,9 @@ export class Boot extends Phaser.State {
   }
   
   create() {
-    this.add.audio("music").play();
+    this.music = this.music || this.add.audio("music");
+    this.music.stop();
+    this.music.play();
     this.readyText.setText("PRESS SPACE TO START!");
   }
   

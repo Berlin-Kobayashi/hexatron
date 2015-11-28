@@ -90,7 +90,6 @@ export class Grid {
             return 1;
         }
 
-
         this.grid[initialXPos][initialYPos] = bodyKey;
 
         this.grid[player.xPos][player.yPos] = headKey;
@@ -100,19 +99,27 @@ export class Grid {
     }
 
     player1Left() {
+
         this.player1.left();
+
     }
 
     player2Left() {
+
         this.player2.left();
+
     }
 
     player1Right() {
+
         this.player1.right();
+
     }
 
     player2Right() {
+
         this.player2.right();
+
     }
 }
 
@@ -124,7 +131,7 @@ export class Player {
         this.xPos = position[0];
         this.yPos = position[1];
         this.direction = direction;
-        this.trail = new Array();
+        this.trail = [];
 
     }
 
