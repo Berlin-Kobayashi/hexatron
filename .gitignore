@@ -1,0 +1,9 @@
+.idea/
+.vagrant/
+*.iml
+
+node_modules
+dist/js
+dist/bower_components
+compiled
+dist/config.json
