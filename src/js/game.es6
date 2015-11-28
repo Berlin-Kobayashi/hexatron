@@ -5,18 +5,24 @@ export class Game extends Phaser.State {
     this.scale = 0.5;
     this.time.desiredFps = 10;
     this.drawBackground();
-    this.player1 = {}; // TODO: define as player
-    this.player1.x = 5;
-    this.player1.y = 6;
-    this.player1.sprite = this.add.sprite(50, 50, "head");
-    this.player1.sprite.scale.setTo(this.scale, this.scale);
-    this.player1.sprite.tint = 0xff0000;
-    this.player2 = {};
-    this.player2.x = 10;
-    this.player2.y = 10;
-    this.player2.sprite = this.add.sprite(100, 100, "head");
-    this.player2.sprite.scale.setTo(this.scale, this.scale);
-    this.player2.sprite.tint = 0x0000ff;
+    
+    this.player1 = this.createPlayer(0xff0000);
+    this.player2 = this.createPlayer(0x0000ff);
+  }
+  
+  createPlayer(colour) {
+    let player = {};
+    player.x = 0;
+    player.y = 0;
+    player.sprite = this.add.sprite(100, 100, "head");
+    player.sprite.scale.setTo(this.scale, this.scale);
+    player.sprite.tint = colour;
+    player.body = [];
+    for (let i = 0; i < 8; ++i) {
+      player.body[i] = this.add.sprite(100, 100, "body");
+      player.body[i].tint = colour;
+    }
+    return player;
   }
   
   update() {
@@ -31,17 +37,30 @@ export class Game extends Phaser.State {
       // player 2 turn right
     }
     
-    this.player1.y += 1;
-    if (this.player1.y > 30) this.player1.y = 0;
+    this.updatePlayer(this.player1);
     this.drawPlayer(this.player1);
+    this.updatePlayer(this.player2);
     this.drawPlayer(this.player2);
+  }
+  
+  updatePlayer(player) {
+    // update head from logic
+    // update body from logic
+    
+    // for now:
+    player.y += 1;
+    if (player.y > 30) player.y = 0;
   }
   
   drawPlayer(player) {
     let x = player.x;
     let y = player.y;
-    player.sprite.position.x = this.grid[x][y].x
+    player.sprite.position.x = this.grid[x][y].x;
     player.sprite.position.y = this.grid[x][y].y;
+    for (let i = 0; i < player.body.length; ++i) {
+      player.body[i].position.x = this.grid[x][y].x;
+      player.body[i].position.y = this.grid[x][y].y;
+    }
   }
   
   drawBackground() {
