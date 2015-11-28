@@ -5,17 +5,20 @@ export class Game extends Phaser.State {
     this.scale = 0.5;
     this.drawBackground();
     this.player1 = {}; // TODO: define as player
+    this.player1.x = 5;
+    this.player1.y = 6;
     this.player1.sprite = this.add.sprite(50, 50, "head");
     this.player1.sprite.scale.setTo(this.scale, this.scale);
     this.player1.sprite.tint = 0xff0000;
     this.player2 = {};
+    this.player2.x = 10;
+    this.player2.y = 10;
     this.player2.sprite = this.add.sprite(100, 100, "head");
     this.player2.sprite.scale.setTo(this.scale, this.scale);
     this.player2.sprite.tint = 0x0000ff;
   }
   
   update() {
-    
     if (this.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
       // player 1 turn left 
     } else if (this.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
@@ -27,7 +30,17 @@ export class Game extends Phaser.State {
       // player 2 turn right
     }
     
-    this.renderGrid();
+    this.player1.x += 1;
+    if (this.player1.x > 30) this.player1.x = 0;
+    this.drawPlayer(this.player1);
+    this.drawPlayer(this.player2);
+  }
+  
+  drawPlayer(player) {
+    let x = player.x;
+    let y = player.y;
+    player.sprite.position.x = this.grid[x][y].x
+    player.sprite.position.y = this.grid[x][y].y;
   }
   
   drawBackground() {
