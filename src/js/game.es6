@@ -62,7 +62,7 @@ export class Game extends Phaser.State {
   }
   
   playTurnSound() {
-    let choice = this.getRandomIntInclusive(0, 3);
+    let choice = this.getRandomIntInclusive(1, 4);
     this.sound.play("turn" + choice);
   }
   
