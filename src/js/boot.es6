@@ -10,6 +10,18 @@ export class Boot extends Phaser.State {
     this.add.text(this.world.centerX, this.world.centerY, "HEXATRON!!!!!", style).anchor.setTo(0.5);
     this.readyText = this.add.text(this.world.centerX, this.world.centerY + 100, "LOADING...", style);
     this.readyText.anchor.setTo(0.5);
+    $(document).ready(function() {
+      $("<input>")
+        .attr("id", "maxLength")
+        .val(10)
+        .css({position: "absolute", left: 550, top: 650})
+        .appendTo($("body"));
+      $("<div>")
+        .attr("id", "maxLengthLabel")
+        .text("Maximum length:")
+        .css({position: "absolute", color: "white", left: 300, top: 650})
+        .appendTo($("body"));
+    });
   }
   
   preload() {
@@ -34,6 +46,9 @@ export class Boot extends Phaser.State {
   update() {
     if (this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
     {
+      this.state.states["Game"].maxLength = parseInt($("#maxLength").val());
+      $("#maxLength").remove();
+      $("#maxLengthLabel").remove();
       this.state.start("Game"); 
     }
   }
