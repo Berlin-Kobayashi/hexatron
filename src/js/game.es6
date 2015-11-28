@@ -2,6 +2,7 @@ import * as Grid from "./game/logic"
 
 export class Game extends Phaser.State {
   create() {
+    this.stage.backgroundColor = 0x000000;
     this.gridSize = {x: 40, y: 20};
     this.data = new Grid.Grid(this.gridSize.x, this.gridSize.y);
     this.scale = 1;

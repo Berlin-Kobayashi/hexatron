@@ -13,8 +13,8 @@ export class GameOver extends Phaser.State {
       text = "HOLY COW! A TIE! WHOOOOOA!!!!";
     }
     let style = { font: "24px Arial", fill: "#fff", align: "center" };
-    this.add.text(this.world.centerX, this.world.centerY, text, style);
-    this.readyText = this.add.text(this.world.centerX, this.world.centerY + 100, "PRESS SPACE TO PLAY AGAIN", style);
+    this.add.text(this.world.centerX, this.world.centerY, text, style).anchor.setTo(0.5);
+    this.readyText = this.add.text(this.world.centerX, this.world.centerY + 100, "PRESS SPACE TO PLAY AGAIN", style).anchor.setTo(0.5);
   }
   
   update() {
