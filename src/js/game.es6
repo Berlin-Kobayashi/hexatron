@@ -25,7 +25,8 @@ export class Game extends Phaser.State {
   update() {
     let gameOver = this.data.nextTurn();
     if (gameOver != 0) {
-      this.state.start("GameOver", gameOver);
+      this.state.states['GameOver'].gameOverStatus = gameOver;
+      this.state.start("GameOver");
     }
     
     if (this.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {

@@ -1,12 +1,15 @@
 export class GameOver extends Phaser.State {
-  init(gameOverStatus) {
-    console.log(gameOverStatus);
+  init() {
+    console.log(this.state.states['GameOver'].gameOverStatus);
     let text = "WTF??";
-    if (gameOverStatus == 1) {
+    if (this.gameOverStatus == 1) {
+      this.stage.backgroundColor = 0xff0000;
       text = "PLAYER 1 YOU ARE AMAZING! EVERYONE LOVES YOU!!!";
-    } else if (gameOverStatus == 2) {
+    } else if (this.gameOverStatus == 2) {
+      this.stage.backgroundColor = 0x0000ff;
       text = "PLAYER 2 IS THE THE BEST, BY FAR!";
-    } else if (gameOverStatus == 3) {
+    } else if (this.gameOverStatus == 3) {
+      this.stage.backgroundColor = 0x00ff00;
       text = "HOLY COW! A TIE! WHOOOOOA!!!!";
     }
     let style = { font: "24px Arial", fill: "#fff", align: "center" };
