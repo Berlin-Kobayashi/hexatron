@@ -2,8 +2,8 @@ import * as Grid from "./game/logic"
 
 export class Game extends Phaser.State {
   create() {
-    this.gridSize = 32;
-    this.data = new Grid.Grid(this.gridSize);
+    this.gridSize = {x: 40, y: 20};
+    this.data = new Grid.Grid(this.gridSize.x, this.gridSize.y);
     this.scale = 1;
     this.time.desiredFps = 10;
     this.drawBackground();
@@ -39,8 +39,8 @@ export class Game extends Phaser.State {
       this.data.player2Right();
     }
     
-    for (let x = 0; x < this.gridSize; ++x) {
-      for (let y = 0; y < this.gridSize; ++y) {
+    for (let x = 0; x < this.gridSize.x; ++x) {
+      for (let y = 0; y < this.gridSize.y; ++y) {
         if (this.data.grid[x][y] == 1) {
           this.drawPlayerPart(this.player1.sprite, x, y);
         } else if (this.data.grid[x][y] == 2) {
@@ -62,9 +62,9 @@ export class Game extends Phaser.State {
   
   drawBackground() {
     this.grid = [];
-    for (let x = 0; x < this.gridSize; ++x) {
+    for (let x = 0; x < this.gridSize.x; ++x) {
       this.grid[x] = [];
-      for (let y = 0; y < this.gridSize; ++y) {
+      for (let y = 0; y < this.gridSize.y; ++y) {
         let offset = x % 2 == 0 ? 0 : 16;
         let canvasX = (x * 26)*this.scale;
         let canvasY = (y * 32 + offset)*this.scale;
