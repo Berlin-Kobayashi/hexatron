@@ -1,5 +1,10 @@
 export class Boot extends Phaser.State {
   init() {
+    this.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
+    this.input.keyboard.addKeyCapture(Phaser.Keyboard.A);
+    this.input.keyboard.addKeyCapture(Phaser.Keyboard.D);
+    this.input.keyboard.addKeyCapture(Phaser.Keyboard.LEFT);
+    this.input.keyboard.addKeyCapture(Phaser.Keyboard.RIGHT);
     this.stage.smoothed = true;
     let style = { font: "24px Arial", fill: "#fff", align: "center" };
     this.add.text(this.world.centerX, this.world.centerY, "HEXATRON!!!!!", style).anchor.setTo(0.5);

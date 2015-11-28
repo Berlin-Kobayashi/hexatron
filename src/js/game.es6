@@ -47,12 +47,13 @@ export class Game extends Phaser.State {
     
     for (let x = 0; x < this.gridSize.x; ++x) {
       for (let y = 0; y < this.gridSize.y; ++y) {
-        if (this.data.grid[x][y] == 1) {
+        if (this.data.grid[x][y] == 0) {
+          this.grid[x][y].body.tint = 0x000000;
+        } if (this.data.grid[x][y] == 1) {
           this.drawPlayerPart(this.player1.sprite, x, y);
         } else if (this.data.grid[x][y] == 2) {
           this.drawPlayerPart(this.player2.sprite, x, y);
-        }
-        if (this.data.grid[x][y] == 3) {
+        } else if (this.data.grid[x][y] == 3) {
           this.grid[x][y].body.tint = 0xff0000;
         } else if (this.data.grid[x][y] == 4) {
           this.grid[x][y].body.tint = 0x0000ff;
