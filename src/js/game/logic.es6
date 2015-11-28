@@ -4,8 +4,6 @@ export class Grid {
 
     constructor(gridSizeX, gridSizeY, trailLength) {
 
-        //this.state = gameState.PAUSED;
-
         this.turnCounter = 0;
 
         this.gridSizeX = gridSizeX;
@@ -81,7 +79,7 @@ export class Grid {
         player.forward();
 
         if (this.turnCounter > this.trailLength) {
-            let tailPos = player.trail.pop();
+            let tailPos = player.trail.shift();
             this.grid[tailPos.x][tailPos.y] = cellState.EMPTY;
         }
 
@@ -98,8 +96,6 @@ export class Grid {
         this.grid[player.xPos][player.yPos] = headKey;
 
         return 0;
-
-        //TODO unset the end of the trail if max trail length reached
 
     }
 
