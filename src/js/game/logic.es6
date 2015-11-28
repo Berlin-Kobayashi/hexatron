@@ -2,7 +2,7 @@ export class Grid {
 
 // Player 1 starts at the bottom Player 2 at the top
 
-    constructor(gridSizeX, gridSizeY) {
+    constructor(gridSizeX, gridSizeY, trailLength) {
 
         //this.state = gameState.PAUSED;
 
@@ -11,7 +11,7 @@ export class Grid {
         this.gridSizeX = gridSizeX;
         this.gridSizeY = gridSizeY;
 
-        this.trailLength = parseInt(gridSizeY / 2);
+        this.trailLength = trailLength;
 
         this.player1 = new Player("Player 1", {}, playerDirection.UP);
         this.player2 = new Player("Player 2", {}, playerDirection.DOWN);
@@ -57,9 +57,6 @@ export class Grid {
         let didPlayer1Lose = this.playerForward(this.player1, cellState.BODY1, cellState.HEAD1);
         let didPlayer2Lose = this.playerForward(this.player2, cellState.BODY2, cellState.HEAD2);
 
-        console.log(didPlayer1Lose);
-        console.log(didPlayer2Lose);
-
         if (didPlayer1Lose === 0 && didPlayer2Lose === 0) {
             this.turnCounter++;
             return winner.RUNNING;
@@ -83,10 +80,10 @@ export class Grid {
 
         player.forward();
 
-        //if out of bounce infront cell status = bodyKey
-        let infrontCellState = (player.xPos >= this.gridSizeX || player.yPos >= this.gridSizeY || player.xPos < 0 || player.yPos < 0) ? bodyKey : this.grid[player.xPos][player.yPos];
+        //if out of bounce in front cell status = bodyKey
+        let inFrontCellState = (player.xPos >= this.gridSizeX || player.yPos >= this.gridSizeY || player.xPos < 0 || player.yPos < 0) ? bodyKey : this.grid[player.xPos][player.yPos];
 
-        if (infrontCellState !== cellState.EMPTY) {
+        if (inFrontCellState !== cellState.EMPTY) {
             return 1;
         }
 
