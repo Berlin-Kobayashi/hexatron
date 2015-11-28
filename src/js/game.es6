@@ -3,9 +3,9 @@ import * as Grid from "./game/logic"
 export class Game extends Phaser.State {
   create() {
     this.stage.backgroundColor = 0x000000;
-    this.gridSize = {x: 40, y: 20};
+    this.gridSize = {x: 80, y: 40};
     this.data = new Grid.Grid(this.gridSize.x, this.gridSize.y);
-    this.scale = 1;
+    this.scale = 0.5;
     this.time.desiredFps = 10;
     this.drawBackground();
     
@@ -32,13 +32,17 @@ export class Game extends Phaser.State {
     
     if (this.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
       this.data.player1Left();
+      this.playTurnSound();
     } else if (this.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
       this.data.player1Right();
+      this.playTurnSound();
     }
     if (this.input.keyboard.isDown(Phaser.Keyboard.A)) {
       this.data.player2Left();
+      this.playTurnSound();
     } else if (this.input.keyboard.isDown(Phaser.Keyboard.D)) {
       this.data.player2Right();
+      this.playTurnSound();
     }
     
     for (let x = 0; x < this.gridSize.x; ++x) {
@@ -55,6 +59,15 @@ export class Game extends Phaser.State {
         }
       }
     }
+  }
+  
+  playTurnSound() {
+    let choice = this.getRandomIntInclusive(0, 3);
+    this.sound.play("turn" + choice);
+  }
+  
+  getRandomIntInclusive(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   
   drawPlayerPart(sprite, x, y) {
@@ -74,6 +87,7 @@ export class Game extends Phaser.State {
         this.grid[x][y].scale.setTo(this.scale, this.scale);
         this.grid[x][y].body = this.add.sprite(canvasX + 9 * this.scale, canvasY + 8 * this.scale, "body");
         this.grid[x][y].body.tint = 0x000000;
+        this.grid[x][y].body.scale.setTo(this.scale, this.scale);
       }
     }
   }

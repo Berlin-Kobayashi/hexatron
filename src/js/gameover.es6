@@ -5,9 +5,11 @@ export class GameOver extends Phaser.State {
     if (this.gameOverStatus == 1) {
       this.stage.backgroundColor = 0xff0000;
       text = "PLAYER 1 YOU ARE AMAZING! EVERYONE LOVES YOU!!!";
+      this.sound.play("deadSound");
     } else if (this.gameOverStatus == 2) {
       this.stage.backgroundColor = 0x0000ff;
       text = "PLAYER 2 IS THE THE BEST, BY FAR!";
+      this.sound.play("deadSound");
     } else if (this.gameOverStatus == 3) {
       this.stage.backgroundColor = 0x00ff00;
       text = "HOLY COW! A TIE! WHOOOOOA!!!!";
