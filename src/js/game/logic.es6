@@ -217,7 +217,7 @@ export var winner = {
     RUNNING: 0,
     PLAYER1: 1,
     PLAYER2: 2,
-    DRAW: 3,
+    DRAW: 3
 
 };
 
@@ -238,6 +238,6 @@ export var playerDirection = {
     RIGHTDOWN: 2,
     DOWN: 3,
     LEFTDOWN: 4,
-    LEFTUP: 5,
+    LEFTUP: 5
 
 };
