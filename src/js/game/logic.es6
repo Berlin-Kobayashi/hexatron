@@ -50,37 +50,47 @@ export class Grid {
 
     nextTurn() {
 
-        this.player1Forward();
-        this.player2Forward();
-        this.turnCounter++;
+        let didPlayer1Lose = this.playerForward(this.player1, cellState.BODY1, cellState.HEAD1);
+        let didPlayer2Lose = this.playerForward(this.player2, cellState.BODY2, cellState.HEAD2);
+
+        console.log(didPlayer1Lose);
+        console.log(didPlayer2Lose);
+
+        if (didPlayer1Lose === 0 && didPlayer2Lose === 0) {
+            this.turnCounter++;
+            return winner.RUNNING;
+        } else if (didPlayer1Lose === 1 && didPlayer2Lose === 1) {
+            return winner.DRAW;
+        } else if (didPlayer1Lose === 1 && didPlayer2Lose === 0) {
+            return winner.PLAYER2;
+        } else if (didPlayer1Lose === 0 && didPlayer2Lose === 1) {
+            return winner.PLAYER1;
+        }
 
     }
 
-    player1Forward() {
+    /**
+     * @returns {number} 1 if this player lost and 0 if the game is not decided yet
+     */
+    playerForward(player, bodyKey, headKey) {
 
-        let initialXPos = this.player1.xPos;
-        let initialYPos = this.player1.yPos;
+        let initialXPos = player.xPos;
+        let initialYPos = player.yPos;
 
-        this.player1.forward();
+        player.forward();
 
-        this.grid[initialXPos][initialYPos] = cellState.BODY1;
+        //if out of bounce infront cell status = bodyKey
+        let infrontCellState = (player.xPos >= this.gridSize || player.yPos < this.gridSize || player.xPos < 0 || player.yPos < 0) ? bodyKey : this.grid[player.xPos][player.yPos];
 
-        this.grid[this.player1.xPos][this.player1.yPos] = cellState.HEAD1;
+        if (infrontCellState !== cellState.EMPTY) {
+            return 1;
+        }
 
-        //TODO unset the end of the trail if max trail length reached
+        this.grid[initialXPos][initialYPos] = bodyKey;
 
-    }
+        this.grid[player.xPos][player.yPos] = headKey;
 
-    player2Forward() {
-
-        let initialXPos = this.player2.xPos;
-        let initialYPos = this.player2.yPos;
-
-        this.player2.forward();
-
-        this.grid[initialXPos][initialYPos] = cellState.BODY2;
-
-        this.grid[this.player2.xPos][this.player2.yPos] = cellState.HEAD2;
+        return 0;
 
         //TODO unset the end of the trail if max trail length reached
 
@@ -202,12 +212,14 @@ export class Player {
     }
 }
 
-//export var gameState = {
-//
-//    PAUSED: 0,
-//    RUNNING: 1
-//
-//};
+export var winner = {
+
+    RUNNING: 0,
+    PLAYER1: 1,
+    PLAYER2: 2,
+    DRAW: 3,
+
+};
 
 export var cellState = {
 
