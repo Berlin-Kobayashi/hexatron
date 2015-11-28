@@ -3,5 +3,6 @@
   "version": "0.0.1",
   "license": "GPL-3.0",
   "dependencies": {
+    "phaser" : "~2.4.0"
   }
 }
