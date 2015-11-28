@@ -1,8 +1,10 @@
-// import player logic
+import * as Grid from "./game/logic"
 
 export class Game extends Phaser.State {
   create() {
-    this.scale = 0.5;
+    this.gridSize = 32;
+    this.data = new Grid.Grid(this.gridSize);
+    this.scale = 1;
     this.time.desiredFps = 10;
     this.drawBackground();
     
@@ -17,65 +19,57 @@ export class Game extends Phaser.State {
     player.sprite = this.add.sprite(100, 100, "head");
     player.sprite.scale.setTo(this.scale, this.scale);
     player.sprite.tint = colour;
-    player.body = [];
-    for (let i = 0; i < 8; ++i) {
-      player.body[i] = this.add.sprite(100, 100, "body");
-      player.body[i].tint = colour;
-    }
     return player;
   }
   
   update() {
+    this.data.nextTurn();
+    
     if (this.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-      // player 1 turn left 
+      this.data.player1Left();
     } else if (this.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-      // player 1 turn right
+      this.data.player1Right();
     }
     if (this.input.keyboard.isDown(Phaser.Keyboard.A)) {
-      // player 2 turn left
+      this.data.player2Left();
     } else if (this.input.keyboard.isDown(Phaser.Keyboard.D)) {
-      // player 2 turn right
+      this.data.player2Right();
     }
     
-    this.updatePlayer(this.player1);
-    this.drawPlayer(this.player1);
-    this.updatePlayer(this.player2);
-    this.drawPlayer(this.player2);
-  }
-  
-  updatePlayer(player) {
-    // update head from logic
-    // update body from logic
-    
-    // for now:
-    player.y += 1;
-    if (player.y > 30) player.y = 0;
-  }
-  
-  drawPlayer(player) {
-    let x = player.x;
-    let y = player.y;
-    player.sprite.position.x = this.grid[x][y].x;
-    player.sprite.position.y = this.grid[x][y].y;
-    for (let i = 0; i < player.body.length; ++i) {
-      player.body[i].position.x = this.grid[x][y].x;
-      player.body[i].position.y = this.grid[x][y].y;
-    }
-  }
-  
-  drawBackground() {
-    this.grid = [];
-    for (let x = 0; x < 32; ++x) { // TODO: get gridsize from logic
-      this.grid[x] = [];
-      for (let y = 0; y < 60; ++y) {
-        let offset = y % 2 == 0 ? 0 : 24;
-        this.grid[x][y] = this.add.sprite((x * 48 + offset)*this.scale, (y * 16)*this.scale, "background");
-        this.grid[x][y].scale.setTo(this.scale, this.scale);
+    for (let x = 0; x < this.gridSize; ++x) {
+      for (let y = 0; y < this.gridSize; ++y) {
+        if (this.data.grid[x][y] == 1) {
+          this.drawPlayerPart(this.player1.sprite, x, y);
+        } else if (this.data.grid[x][y] == 2) {
+          this.drawPlayerPart(this.player2.sprite, x, y);
+        }
+        if (this.data.grid[x][y] == 3) {
+          this.grid[x][y].body.tint = 0xff0000;
+        } else if (this.data.grid[x][y] == 4) {
+          this.grid[x][y].body.tint = 0x0000ff;
+        }
       }
     }
   }
   
-  renderGrid() {
-
+  drawPlayerPart(sprite, x, y) {
+    sprite.position.x = this.grid[x][y].x + 4 * this.scale;
+    sprite.position.y = this.grid[x][y].y + 4 * this.scale;
+  }
+  
+  drawBackground() {
+    this.grid = [];
+    for (let x = 0; x < this.gridSize; ++x) {
+      this.grid[x] = [];
+      for (let y = 0; y < this.gridSize; ++y) {
+        let offset = x % 2 == 0 ? 0 : 16;
+        let canvasX = (x * 26)*this.scale;
+        let canvasY = (y * 32 + offset)*this.scale;
+        this.grid[x][y] = this.add.sprite(canvasX, canvasY, "background");
+        this.grid[x][y].scale.setTo(this.scale, this.scale);
+        this.grid[x][y].body = this.add.sprite(canvasX + 9 * this.scale, canvasY + 8 * this.scale, "body");
+        this.grid[x][y].body.tint = 0x000000;
+      }
+    }
   }
 }
