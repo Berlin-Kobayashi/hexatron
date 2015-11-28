@@ -3,6 +3,7 @@
 export class Game extends Phaser.State {
   create() {
     this.scale = 0.5;
+    this.time.desiredFps = 10;
     this.drawBackground();
     this.player1 = {}; // TODO: define as player
     this.player1.x = 5;
@@ -30,8 +31,8 @@ export class Game extends Phaser.State {
       // player 2 turn right
     }
     
-    this.player1.x += 1;
-    if (this.player1.x > 30) this.player1.x = 0;
+    this.player1.y += 1;
+    if (this.player1.y > 30) this.player1.y = 0;
     this.drawPlayer(this.player1);
     this.drawPlayer(this.player2);
   }
