@@ -1,6 +1,9 @@
-export class Grid {
+/**
+ * The coordinate system of the grid starts with x = 0 and y = 0 at the top left.
+ * Player 1 starts at the middle of the top row Player 2 at the middle of the bottom row
+ */
 
-// Player 1 starts at the bottom Player 2 at the top
+export class Grid {
 
     constructor(gridSizeX, gridSizeY, trailLength) {
 
@@ -178,22 +181,22 @@ export class Player {
 
         switch (this.direction) {
             case playerDirection.UP:
-                this.direction = playerDirection.LEFTUP;
-                break;
-            case playerDirection.DOWN:
-                this.direction = playerDirection.RIGHTDOWN;
-                break;
-            case playerDirection.RIGHTUP:
-                this.direction = playerDirection.UP;
-                break;
-            case playerDirection.RIGHTDOWN:
                 this.direction = playerDirection.RIGHTUP;
                 break;
-            case playerDirection.LEFTUP:
+            case playerDirection.DOWN:
                 this.direction = playerDirection.LEFTDOWN;
                 break;
-            case playerDirection.LEFTDOWN:
+            case playerDirection.RIGHTUP:
+                this.direction = playerDirection.RIGHTDOWN;
+                break;
+            case playerDirection.RIGHTDOWN:
                 this.direction = playerDirection.DOWN;
+                break;
+            case playerDirection.LEFTUP:
+                this.direction = playerDirection.UP;
+                break;
+            case playerDirection.LEFTDOWN:
+                this.direction = playerDirection.LEFTUP;
                 break;
         }
 
@@ -203,26 +206,27 @@ export class Player {
 
         switch (this.direction) {
             case playerDirection.UP:
-                this.direction = playerDirection.RIGHTUP;
+                this.direction = playerDirection.LEFTUP;
                 break;
             case playerDirection.DOWN:
-                this.direction = playerDirection.LEFTDOWN;
-                break;
-            case playerDirection.RIGHTUP:
                 this.direction = playerDirection.RIGHTDOWN;
                 break;
-            case playerDirection.RIGHTDOWN:
-                this.direction = playerDirection.DOWN;
-                break;
-            case playerDirection.LEFTUP:
+            case playerDirection.RIGHTUP:
                 this.direction = playerDirection.UP;
                 break;
+            case playerDirection.RIGHTDOWN:
+                this.direction = playerDirection.RIGHTUP;
+                break;
+            case playerDirection.LEFTUP:
+                this.direction = playerDirection.LEFTDOWN;
+                break;
             case playerDirection.LEFTDOWN:
-                this.direction = playerDirection.LEFTUP;
+                this.direction = playerDirection.DOWN;
                 break;
         }
 
     }
+    
 }
 
 export var winner = {
