@@ -1,10 +1,10 @@
-import * as Grid from "./game/logic"
+import {Grid} from "./game/logic.js";
 
 export class Game extends Phaser.State {
   create() {
     this.stage.backgroundColor = 0x000000;
     this.gridSize = {x: 80, y: 40};
-    this.data = new Grid.Grid(this.gridSize.x, this.gridSize.y, this.maxLength);
+    this.data = new Grid(this.gridSize.x, this.gridSize.y, this.maxLength);
     this.scale = 0.5;
     this.time.desiredFps = 10;
     this.drawBackground();
@@ -26,8 +26,8 @@ export class Game extends Phaser.State {
   update() {
     let gameOver = this.data.nextTurn();
     if (gameOver != 0) {
-      this.state.states['GameOver'].gameOverStatus = gameOver;
-      this.state.start("GameOver");
+      this.state.states['Gameover'].gameOverStatus = gameOver;
+      this.state.start("Gameover");
     }
     
     if (this.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {

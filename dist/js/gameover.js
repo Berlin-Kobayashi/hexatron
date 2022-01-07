@@ -1,6 +1,6 @@
-export class GameOver extends Phaser.State {
+export class Gameover extends Phaser.State {
   init() {
-    console.log(this.state.states['GameOver'].gameOverStatus);
+    console.log(this.state.states['Gameover'].gameOverStatus);
     let text = "WTF??";
     if (this.gameOverStatus == 1) {
       this.stage.backgroundColor = 0xff0000;
